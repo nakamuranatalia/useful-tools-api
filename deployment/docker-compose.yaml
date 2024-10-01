@@ -1,0 +1,35 @@
+services:
+  db:
+    image: postgres
+    volumes: 
+      - ./volume:/var/lib/postgresql
+    environment:
+      POSTGRES_PASSWORD: psswrd
+      POSTGRES_USER: user
+    ports: 
+      - 5432:5432
+  admin:
+    image: dpage/pgadmin4:latest
+    depends_on:
+      - db
+    environment:
+      PGADMIN_DEFAULT_EMAIL: user@localhost.com
+      PGADMIN_DEFAULT_PASSWORD: psswrd
+    ports: 
+      - 8080:80
+  app:
+    build:
+      context: ..
+      dockerfile: ./build/Dockerfile
+    depends_on:
+      - db
+    ports: 
+      - 3000:3000
+    networks:
+      - development-network
+
+volumes:
+  db:
+networks:
+  development-network:
+    driver: bridge
