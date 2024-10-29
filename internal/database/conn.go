@@ -1,7 +1,6 @@
 package database
 
 import (
-	"fmt"
 	"log"
 
 	"gorm.io/driver/postgres"
@@ -18,8 +17,24 @@ const (
 	SSLMODE = "disabled"
 )
 
+// func CreateDatabase() {
+// 	dsn := "host=localhost user=user password=psswrd port=5432 sslmode=disable"
+// 	count := 0
+
+// 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+// 	if err != nil {
+// 		log.Panic("Não rolou conectar não :/")
+// 	}
+
+// 	db.Raw("SELECT count(*) FROM pg_database WHERE datname = ?", DBNAME).Scan(&count)
+// 	if count == 0 {
+// 		db.Exec("CREATE DATABASE %s", DBNAME)
+// 	}
+// }
+
 func DatabaseConnection() *gorm.DB {
-	createDatabase()
+	dsn := "username=user password=psswrd dbname=useful-tools host=localhost port=5432 sslmode=disable"
+	//CreateDatabase()
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 
 	if err != nil {
@@ -27,19 +42,4 @@ func DatabaseConnection() *gorm.DB {
 	}
 
 	return db
-}
-
-func createDatabase() {
-	connDsn := fmt.Sprintf("host=%s user=%s password=%s port=%s sslmmode=%s", HOST, USER, PSSWRD, PORT, SSLMODE)
-	count := 0
-
-	db, err := gorm.Open(postgres.Open(connDsn), &gorm.Config{})
-	if err != nil {
-		panic(err)
-	}
-
-	db.Raw("SELECT count(*) FROM %s", DBNAME).Scan(&count)
-	if count == 0 {
-		db.Exec("CREATE DATABASE %s", DBNAME)
-	}
 }
