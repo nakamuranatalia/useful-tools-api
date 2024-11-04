@@ -1,7 +1,8 @@
 FROM golang:1.23.1 AS build 
 WORKDIR /app
 COPY . /app
-RUN CGO_ENABLED=0 GOOS=linux go build -o api cmd/main.go
+RUN go mod tidy
+RUN CGO_ENABLED=0 GOOS=linux go build -o api ./cmd/main.go
 
 FROM scratch
 WORKDIR /app
