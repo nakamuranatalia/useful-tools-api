@@ -1,45 +1,31 @@
 package database
 
 import (
+	"fmt"
 	"log"
 
+	"github.com/nakamuranatalia/useful-tools-api/internal/model"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
 
 const (
-	dsn     = "host=localhost user=user password=psswrd dbname=useful-tools port=5432 sslmode=disable"
-	HOST    = "localhost"
-	USER    = "user"
-	PSSWRD  = "psswrd"
-	DBNAME  = "useful-tools"
-	PORT    = "5432"
-	SSLMODE = "disabled"
+	host     = "postgres"
+	user     = "user"
+	password = "psswrd"
+	dbName   = "useful-tools"
+	sslMode  = "disable"
 )
 
-// func CreateDatabase() {
-// 	dsn := "host=localhost user=user password=psswrd port=5432 sslmode=disable"
-// 	count := 0
-
-// 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
-// 	if err != nil {
-// 		log.Panic("Não rolou conectar não :/")
-// 	}
-
-// 	db.Raw("SELECT count(*) FROM pg_database WHERE datname = ?", DBNAME).Scan(&count)
-// 	if count == 0 {
-// 		db.Exec("CREATE DATABASE %s", DBNAME)
-// 	}
-// }
-
 func DatabaseConnection() *gorm.DB {
-	dsn := "username=user password=psswrd dbname=useful-tools host=localhost port=5432 sslmode=disable"
-	//CreateDatabase()
+	dsn := fmt.Sprintf("host=%s user=%s dbname=%s password=%s sslmode=%s", host, user, dbName, password, sslMode)
+
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 
 	if err != nil {
-		log.Panic("Error connecting to the database")
+		log.Panicf("Could not start the database, error: %v", err)
 	}
+	db.AutoMigrate(&model.Tool{})
 
 	return db
 }
