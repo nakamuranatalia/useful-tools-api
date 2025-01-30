@@ -6,7 +6,7 @@ import (
 )
 
 type Repository interface {
-	SaveTool(tool model.Tool) (*model.Tool, error)
+	SaveTool(model.Tool) (*model.Tool, error)
 }
 type ToolsRepository struct {
 	gorm *gorm.DB

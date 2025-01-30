@@ -9,7 +9,8 @@ import (
 )
 
 type Controller interface {
-	SaveTool(c echo.Context) error
+	SaveTool(echo.Context) error
+	DeleteTool(echo.Context) error
 }
 
 type ToolsController struct {
