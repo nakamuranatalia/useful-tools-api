@@ -8,21 +8,21 @@ import (
 	"github.com/nakamuranatalia/useful-tools-api/internal/model"
 )
 
-type ToolController interface {
+type Controller interface {
 	SaveTool(c echo.Context) error
 }
 
-type toolsController struct {
+type ToolsController struct {
 	service service.Service
 }
 
-func NewController(service service.Service) toolsController {
-	return toolsController{
+func NewController(service service.Service) ToolsController {
+	return ToolsController{
 		service: service,
 	}
 }
 
-func (c toolsController) SaveTool(context echo.Context) error {
+func (c ToolsController) SaveTool(context echo.Context) error {
 	tool := model.Tool{}
 
 	err := context.Bind(&tool)

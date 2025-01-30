@@ -9,16 +9,16 @@ type Service interface {
 	SaveTool(model.Tool) (*model.Tool, error)
 }
 
-type toolsService struct {
+type ToolsService struct {
 	repository repository.Repository
 }
 
-func NewService(repository repository.Repository) toolsService {
-	return toolsService{
+func NewService(repository repository.Repository) ToolsService {
+	return ToolsService{
 		repository: repository,
 	}
 }
 
-func (s toolsService) SaveTool(tool model.Tool) (*model.Tool, error) {
+func (s ToolsService) SaveTool(tool model.Tool) (*model.Tool, error) {
 	return s.repository.SaveTool(tool)
 }

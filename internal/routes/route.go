@@ -5,7 +5,7 @@ import (
 	"github.com/nakamuranatalia/useful-tools-api/internal/controller"
 )
 
-func HandleRequest(c controller.ToolController) {
+func HandleRequest(c controller.Controller) {
 	r := echo.New()
 	r.POST("/tools", c.SaveTool)
 	r.Logger.Fatal(r.Start(":3000"))
