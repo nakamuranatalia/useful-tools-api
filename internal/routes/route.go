@@ -1,15 +1,12 @@
 package routes
 
 import (
-	"net/http"
-
 	"github.com/labstack/echo/v4"
+	"github.com/nakamuranatalia/useful-tools-api/internal/controller"
 )
 
-func HandleRequest() {
+func HandleRequest(c controller.ToolController) {
 	r := echo.New()
-	r.GET("/", func(c echo.Context) error {
-		return c.String(http.StatusOK, "Hello, World!")
-	})
+	r.POST("/tools", c.SaveTool)
 	r.Logger.Fatal(r.Start(":3000"))
 }
