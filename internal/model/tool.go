@@ -11,5 +11,5 @@ type Tool struct {
 	Title       string    `json:"title"`
 	Link        string    `json:"link"`
 	Description string    `json:"description"`
-	Tags        []Tag     `gorm:"many2many:tool_tags"`
+	Tags        []Tag     `gorm:"many2many:tool_tag"`
 }
