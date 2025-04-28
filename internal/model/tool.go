@@ -7,7 +7,7 @@ import (
 
 type Tool struct {
 	gorm.Model
-	Uuid        uuid.UUID `gorm:"ẗype:uuid;default:gen_random_uuid()" json:"uuid"`
+	Uuid        uuid.UUID `gorm:"type:uuid;default:gen_random_uuid()" json:"uuid"`
 	Title       string    `json:"title"`
 	Link        string    `json:"link"`
 	Description string    `json:"description"`
