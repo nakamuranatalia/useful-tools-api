@@ -10,7 +10,7 @@ import (
 
 type Controller interface {
 	SaveTool(echo.Context) error
-	FindTool(echo.Context) error
+	FindTools(echo.Context) error
 }
 
 type ToolsController struct {
@@ -40,7 +40,7 @@ func (c ToolsController) SaveTool(context echo.Context) error {
 }
 
 func (c ToolsController) FindTool(context echo.Context) error {
-	result, err := c.service.FindTool()
+	result, err := c.service.FindTools()
 
 	if err != nil {
 		return context.String(http.StatusInternalServerError, err.Error())

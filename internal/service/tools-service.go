@@ -25,5 +25,5 @@ func (s ToolsService) SaveTool(tool model.Tool) (*model.Tool, error) {
 }
 
 func (s ToolsService) FindTool() ([]model.Tool, error) {
-	return s.repository.FindTool()
+	return s.repository.FindTools()
 }
