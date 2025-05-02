@@ -8,5 +8,6 @@ import (
 func HandleRequest(c controller.Controller) {
 	r := echo.New()
 	r.POST("/tools", c.SaveTool)
+	r.GET("/tools", c.FindTool)
 	r.Logger.Fatal(r.Start(":3000"))
 }

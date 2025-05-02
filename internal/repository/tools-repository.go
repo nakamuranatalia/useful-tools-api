@@ -7,6 +7,7 @@ import (
 
 type Repository interface {
 	SaveTool(model.Tool) (*model.Tool, error)
+	FindTool() ([]model.Tool, error)
 }
 type ToolsRepository struct {
 	gorm *gorm.DB
@@ -21,4 +22,11 @@ func NewRepository(gorm *gorm.DB) ToolsRepository {
 func (r ToolsRepository) SaveTool(tool model.Tool) (*model.Tool, error) {
 	result := r.gorm.Create(&tool)
 	return &tool, result.Error
+}
+
+func (r ToolsRepository) FindTool() ([]model.Tool, error) {
+	var tools []model.Tool
+	result := r.gorm.Preload("Tags").Find(&tools)
+
+	return tools, result.Error
 }
