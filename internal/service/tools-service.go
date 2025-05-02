@@ -7,7 +7,7 @@ import (
 
 type Service interface {
 	SaveTool(model.Tool) (*model.Tool, error)
-	FindTool() ([]model.Tool, error)
+	FindTools() ([]model.Tool, error)
 }
 
 type ToolsService struct {
@@ -24,6 +24,6 @@ func (s ToolsService) SaveTool(tool model.Tool) (*model.Tool, error) {
 	return s.repository.SaveTool(tool)
 }
 
-func (s ToolsService) FindTool() ([]model.Tool, error) {
+func (s ToolsService) FindTools() ([]model.Tool, error) {
 	return s.repository.FindTools()
 }
