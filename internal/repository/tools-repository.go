@@ -8,7 +8,9 @@ import (
 type Repository interface {
 	SaveTool(model.Tool) (*model.Tool, error)
 	FindTools() ([]model.Tool, error)
+	FindToolByUuid(string) (*model.Tool, error)
 }
+
 type ToolsRepository struct {
 	gorm *gorm.DB
 }
@@ -29,4 +31,11 @@ func (r ToolsRepository) FindTools() ([]model.Tool, error) {
 	result := r.gorm.Preload("Tags").Find(&tools)
 
 	return tools, result.Error
+}
+
+func (r ToolsRepository) FindToolByUuid(toolUuid string) (*model.Tool, error) {
+	var tool model.Tool
+	result := r.gorm.Preload("Tags").First(&tool, "uuid", toolUuid)
+
+	return &tool, result.Error
 }
