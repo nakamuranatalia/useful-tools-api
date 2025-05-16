@@ -9,6 +9,7 @@ type Repository interface {
 	SaveTool(model.Tool) (*model.Tool, error)
 	FindTools() ([]model.Tool, error)
 	FindToolByUuid(string) (*model.Tool, error)
+	DeleteToolByUuid(string) error
 }
 
 type ToolsRepository struct {
@@ -39,3 +40,32 @@ func (r ToolsRepository) FindToolByUuid(toolUuid string) (*model.Tool, error) {
 
 	return &tool, result.Error
 }
+
+func (r ToolsRepository) DeleteToolByUuid(toolUuid string) error {
+	tool, err := r.FindToolByUuid(toolUuid)
+	if err != nil {
+		return err
+	}
+
+	if err = r.gorm.Model(&tool).Association("Tags").Clear(); err != nil {
+		return err
+	}
+
+	if err = r.gorm.Delete(&tool).Error; err != nil {
+		return err
+	}
+
+	return nil
+}
+
+/*
+var user User
+db.First(&user, userID)
+
+var newProjects []Project
+db.Where("id IN ?", []uint{2, 3}).Find(&newProjects)
+
+// Replace user’s projects
+db.Model(&user).Association("Projects").Replace(&newProjects)
+
+*/

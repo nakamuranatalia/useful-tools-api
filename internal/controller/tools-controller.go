@@ -12,6 +12,7 @@ type Controller interface {
 	SaveTool(echo.Context) error
 	FindTools(echo.Context) error
 	FindToolByUuid(echo.Context) error
+	DeleteToolByUuid(echo.Context) error
 }
 
 type ToolsController struct {
@@ -62,4 +63,19 @@ func (c ToolsController) FindToolByUuid(context echo.Context) error {
 	}
 
 	return context.JSON(http.StatusOK, result)
+}
+
+func (c ToolsController) DeleteToolByUuid(context echo.Context) error {
+	uuid := context.Param("uuid")
+
+	if uuid == "" {
+		return context.String(http.StatusBadRequest, "Uuid is required")
+	}
+
+	err := c.service.DeleteToolByUuid(uuid)
+	if err != nil {
+		return context.String(http.StatusInternalServerError, err.Error())
+	}
+
+	return context.NoContent(http.StatusOK)
 }
