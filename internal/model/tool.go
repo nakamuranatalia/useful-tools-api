@@ -2,11 +2,10 @@ package model
 
 import (
 	"github.com/google/uuid"
-	"gorm.io/gorm"
 )
 
 type Tool struct {
-	gorm.Model
+	Id          uint      `gorm:"primarykey" json:"id"`
 	Uuid        uuid.UUID `gorm:"type:uuid;default:gen_random_uuid()" json:"uuid"`
 	Title       string    `json:"title"`
 	Link        string    `json:"link"`
