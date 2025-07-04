@@ -7,9 +7,10 @@ import (
 
 func HandleRequest(c controller.Controller) {
 	r := echo.New()
-	r.POST("/tools", c.SaveTool)
+	r.POST("/tool", c.SaveTool)
 	r.GET("/tools", c.FindTools)
 	r.GET("tool/:uuid", c.FindToolByUuid)
 	r.DELETE("tool/:uuid", c.DeleteToolByUuid)
+	r.PUT("/tool/:uuid", c.UpdateTool)
 	r.Logger.Fatal(r.Start(":3000"))
 }
