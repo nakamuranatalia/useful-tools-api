@@ -13,6 +13,7 @@ type Controller interface {
 	FindTools(echo.Context) error
 	FindToolByUuid(echo.Context) error
 	DeleteToolByUuid(echo.Context) error
+	UpdateTool(ctx echo.Context) error
 }
 
 type ToolsController struct {
@@ -78,4 +79,21 @@ func (c ToolsController) DeleteToolByUuid(context echo.Context) error {
 	}
 
 	return context.NoContent(http.StatusOK)
+}
+
+func (c ToolsController) UpdateTool(context echo.Context) error {
+	tool := model.Tool{}
+	uuid := context.Param("uuid")
+
+	err := context.Bind(&tool)
+	if err != nil || uuid == "" {
+		return context.String(http.StatusBadRequest, err.Error())
+	}
+
+	result, err := c.service.UpdateTool(tool, uuid)
+	if err != nil {
+		return context.String(http.StatusInternalServerError, err.Error())
+	}
+
+	return context.JSON(http.StatusOK, result)
 }
