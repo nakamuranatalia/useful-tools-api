@@ -6,7 +6,7 @@ import (
 )
 
 type Repository interface {
-	SaveTool(model.Tool) (*model.Tool, error)
+	SaveTool(*model.Tool) (*model.Tool, error)
 	FindTools() ([]model.Tool, error)
 	FindToolByUuid(string) (*model.Tool, error)
 	DeleteToolByUuid(string) error
@@ -23,9 +23,18 @@ func NewRepository(gorm *gorm.DB) ToolsRepository {
 	}
 }
 
-func (r ToolsRepository) SaveTool(tool model.Tool) (*model.Tool, error) {
+func (r ToolsRepository) SaveTool(tool *model.Tool) (*model.Tool, error) {
+	for index, tag := range tool.Tags {
+		var resultTag model.Tag
+		result := r.gorm.Model(&model.Tag{}).Where("name = ?", tag.Name).First(&resultTag)
+
+		if result.RowsAffected >= 1 {
+			tool.Tags[index].Id = resultTag.Id
+		}
+	}
+
 	result := r.gorm.Create(&tool)
-	return &tool, result.Error
+	return tool, result.Error
 }
 
 func (r ToolsRepository) FindTools() ([]model.Tool, error) {

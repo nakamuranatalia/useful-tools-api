@@ -34,7 +34,7 @@ func (c ToolsController) SaveTool(context echo.Context) error {
 		return context.String(http.StatusBadRequest, err.Error())
 	}
 
-	result, err := c.service.SaveTool(tool)
+	result, err := c.service.SaveTool(&tool)
 	if err != nil {
 		return context.String(http.StatusInternalServerError, err.Error())
 	}

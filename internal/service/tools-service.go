@@ -6,7 +6,7 @@ import (
 )
 
 type Service interface {
-	SaveTool(model.Tool) (*model.Tool, error)
+	SaveTool(*model.Tool) (*model.Tool, error)
 	FindTools() ([]model.Tool, error)
 	FindToolByUuid(string) (*model.Tool, error)
 	DeleteToolByUuid(string) error
@@ -23,7 +23,7 @@ func NewService(repository repository.Repository) ToolsService {
 	}
 }
 
-func (s ToolsService) SaveTool(tool model.Tool) (*model.Tool, error) {
+func (s ToolsService) SaveTool(tool *model.Tool) (*model.Tool, error) {
 	return s.repository.SaveTool(tool)
 }
 
