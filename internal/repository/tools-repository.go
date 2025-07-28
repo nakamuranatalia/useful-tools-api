@@ -87,15 +87,3 @@ func (r ToolsRepository) UpdateTool(toolToUpdate *model.Tool, uuid string) (*mod
 
 	return result, err
 }
-
-/*
-var user User
-db.First(&user, userID)
-
-var newProjects []Project
-db.Where("id IN ?", []uint{2, 3}).Find(&newProjects)
-
-// Replace user’s projects
-db.Model(&user).Association("Projects").Replace(&newProjects)
-
-*/
