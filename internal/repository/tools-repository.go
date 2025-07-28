@@ -10,7 +10,7 @@ type Repository interface {
 	FindTools() ([]model.Tool, error)
 	FindToolByUuid(string) (*model.Tool, error)
 	DeleteToolByUuid(string) error
-	UpdateTool(model.Tool, string) (*model.Tool, error)
+	UpdateTool(*model.Tool, string) (*model.Tool, error)
 }
 
 type ToolsRepository struct {
@@ -68,7 +68,7 @@ func (r ToolsRepository) DeleteToolByUuid(toolUuid string) error {
 	return nil
 }
 
-func (r ToolsRepository) UpdateTool(toolToUpdate model.Tool, uuid string) (*model.Tool, error) {
+func (r ToolsRepository) UpdateTool(toolToUpdate *model.Tool, uuid string) (*model.Tool, error) {
 
 	tool, err := r.FindToolByUuid(uuid)
 	if err != nil {

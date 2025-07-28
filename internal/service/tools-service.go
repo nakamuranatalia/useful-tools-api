@@ -10,7 +10,7 @@ type Service interface {
 	FindTools() ([]model.Tool, error)
 	FindToolByUuid(string) (*model.Tool, error)
 	DeleteToolByUuid(string) error
-	UpdateTool(model.Tool, string) (*model.Tool, error)
+	UpdateTool(*model.Tool, string) (*model.Tool, error)
 }
 
 type ToolsService struct {
@@ -39,6 +39,6 @@ func (s ToolsService) DeleteToolByUuid(uuid string) error {
 	return s.repository.DeleteToolByUuid(uuid)
 }
 
-func (s ToolsService) UpdateTool(tool model.Tool, uuid string) (*model.Tool, error) {
+func (s ToolsService) UpdateTool(tool *model.Tool, uuid string) (*model.Tool, error) {
 	return s.repository.UpdateTool(tool, uuid)
 }

@@ -90,7 +90,7 @@ func (c ToolsController) UpdateTool(context echo.Context) error {
 		return context.String(http.StatusBadRequest, err.Error())
 	}
 
-	result, err := c.service.UpdateTool(tool, uuid)
+	result, err := c.service.UpdateTool(&tool, uuid)
 	if err != nil {
 		return context.String(http.StatusInternalServerError, err.Error())
 	}
