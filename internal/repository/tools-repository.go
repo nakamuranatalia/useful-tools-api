@@ -52,20 +52,22 @@ func (r ToolsRepository) FindToolByUuid(toolUuid string) (*model.Tool, error) {
 }
 
 func (r ToolsRepository) DeleteToolByUuid(toolUuid string) error {
-	tool, err := r.FindToolByUuid(toolUuid)
-	if err != nil {
-		return err
-	}
+	return r.gorm.Transaction(func(tx *gorm.DB) error {
+		var tool model.Tool
+		if err := tx.Where("uuid = ?", toolUuid).First(&tool).Error; err != nil {
+			return err
+		}
 
-	if err = r.gorm.Model(&tool).Association("Tags").Clear(); err != nil {
-		return err
-	}
+		if err := tx.Model(&tool).Association("Tags").Clear(); err != nil {
+			return err
+		}
 
-	if err = r.gorm.Delete(&tool).Error; err != nil {
-		return err
-	}
+		if err := tx.Delete(&tool).Error; err != nil {
+			return err
+		}
 
-	return nil
+		return nil
+	})
 }
 
 func (r ToolsRepository) UpdateTool(toolToUpdate *model.Tool, uuid string) (*model.Tool, error) {
