@@ -17,7 +17,7 @@ const (
 	sslMode  = "disable"
 )
 
-func DatabaseConnection() *gorm.DB {
+func Connection() *gorm.DB {
 	dsn := fmt.Sprintf("host=%s user=%s dbname=%s password=%s sslmode=%s", host, user, dbName, password, sslMode)
 
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})

@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-	database := db.DatabaseConnection()
+	database := db.Connection()
 
 	repository := repo.NewRepository(database)
 	service := s.NewService(repository)
